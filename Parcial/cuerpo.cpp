@@ -1,6 +1,6 @@
 #include "cuerpo.h"
 
-Cuerpo::Cuerpo( double _radio, double X, double Y, double _V0, double _angulo,unsigned short _tipo,QObject *parent): QObject{parent}
+Cuerpo::Cuerpo(double _radio, double X, double Y, double _V0,unsigned short _tipo, double _angulo,QObject *parent): QObject{parent}
 {
     tipo=_tipo;
     radio=_radio;
@@ -9,6 +9,7 @@ Cuerpo::Cuerpo( double _radio, double X, double Y, double _V0, double _angulo,un
     angulo=_angulo; //Por default se tiene 3PI/2
     V0=_V0;
     setPos(posX,posY);
+
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
     timer->start(50);
 }
@@ -49,8 +50,8 @@ void Cuerpo::ActualizarPosicion()
     //Segun ecuaciones de MRUA
     posX+=Vx*delta;
     posY-=Vy*delta-0.5*a*delta*delta; //Resta por sistema de coordenadas de la escena
-    //(Si al implementarlo se genera una parabola que abre hacia arriba entonces cambiar
-    //por +=)
+                                      //(Si al implementarlo se genera una parabola que abre hacia arriba entonces cambiar
+                                      //por +=)
     setPos(posX,posY);
 }
 

@@ -26,7 +26,7 @@ private:
     QTimer *timer=new QTimer;
 
 public:
-    Cuerpo(double _radio, double X, double Y, double _V0, double _angulo=(3*M_PI)/2,unsigned short _tipo=1,QObject *parent=nullptr);
+    Cuerpo(double _radio, double X, double Y, double _V0,unsigned short _tipo=1, double _angulo=(3*M_PI)/2,QObject *parent=nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "cuerpo.h"
 
 #include <QDebug> //
 
@@ -15,8 +14,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) , ui(new Ui::MainW
     ui->Grafica->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->Grafica->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    srand(unsigned(time(nullptr)));
+
     timer = new QTimer;
-    connect(timer,SIGNAL(timeout()),this,SLOT(nuevoCuerpo()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(Actualizar()));
     timer->start(dt);
 }
 
@@ -27,12 +28,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_objetoEspecial_clicked()
 {
-
+    qDebug() << "Nuevo cuerpo";
+    x_random = rand() % 650 + 10;
+    x_random = rand() % 200 + 10;
+    Pelotas.push_back(new Cuerpo(12, x_random, y_random,0,2));
+    Pelotas.back()->setFlag(QGraphicsItem::ItemIsFocusable);
+    escena->addItem(Pelotas.back());
 }
 
-void MainWindow::nuevoCuerpo()
+void MainWindow::Actualizar()
 {
+    contTime++;
+
     qDebug() << "Nuevo cuerpo";
-    //x_random = rand() % 650 + 10;
-    //Pelotas.push_back(new Cuerpo(3,))
+    x_random = rand() % 650 + 10;
+    y_random = rand() % 200 + 10;
+    Pelotas.push_back(new Cuerpo(10, x_random, y_random,0));
+    Pelotas.back()->setFlag(QGraphicsItem::ItemIsFocusable);
+    escena->addItem(Pelotas.back());
+
+
+    //if(contTime%2000==0)
+    //{
+        x_random = rand() % 650 + 10;
+        y_random = rand() % 350 + 220;
+        Obstaculos.push_back(new Obstaculo(20,10,x_random,y_random));
+        escena->addItem(Obstaculos.back());
+    //}
 }
