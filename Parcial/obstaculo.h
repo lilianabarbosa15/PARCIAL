@@ -5,14 +5,17 @@
 #include<QObject>
 #include<QGraphicsItem>
 #include<QPainter>
+#include<QGraphicsScene>
+#include<math.h>
+#include<QTimer>
 
-class Obstaculo: public QGraphicsPixmapItem//public QGraphicsItem
+class Obstaculo: public QObject, public QGraphicsItem
 {
 private:
     double posX=0,posY=0,ancho=0,alto=0;
-    //QPixmap apariencia;
+
 public:
-    Obstaculo(double _ancho,double _alto,double x_inicial,double y_iniciale);
+    Obstaculo(double _ancho,double _alto,double x_inicial,double y_inicial, QObject *parent=nullptr);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
     int getPosY();

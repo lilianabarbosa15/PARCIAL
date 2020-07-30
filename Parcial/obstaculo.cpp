@@ -1,6 +1,6 @@
 #include "obstaculo.h"
 
-Obstaculo::Obstaculo(double _ancho, double _alto, double x_inicial, double y_inicial)
+Obstaculo::Obstaculo(double _ancho, double _alto, double x_inicial, double y_inicial, QObject *parent): QObject{parent}
 {
     posX=x_inicial;
     posY=y_inicial;
@@ -11,13 +11,13 @@ Obstaculo::Obstaculo(double _ancho, double _alto, double x_inicial, double y_ini
 
 QRectF Obstaculo::boundingRect() const
 {
-    return QRectF(posX,posY,ancho,alto);
+    return QRectF(-ancho,-alto,2*ancho,2*alto);
 }
 
 void Obstaculo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setBrush(Qt::cyan);
-    painter->drawEllipse(boundingRect());
+    painter->drawRect(boundingRect());
 }
 
 int Obstaculo::getPosY()

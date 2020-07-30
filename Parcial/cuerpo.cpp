@@ -1,6 +1,9 @@
 #include "cuerpo.h"
+#include "obstaculo.h"
 
-Cuerpo::Cuerpo(double _radio, double X, double Y, double _V0,unsigned short _tipo, double _angulo,QObject *parent): QObject{parent}
+#include <QDebug> //
+
+Cuerpo::Cuerpo(double _radio, double X, double Y, double _V0, double _angulo, unsigned short _tipo, QObject *parent): QObject{parent}
 {
     tipo=_tipo;
     radio=_radio;
@@ -33,16 +36,10 @@ void Cuerpo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 void Cuerpo::rebotar()
 {
     //Posible metodo para rebote
-    if(contRebote<2){
-        Vy=-Vy;
-        V0=V0*coefRestitucion;
-        angulo=atan2(Vy,Vx);
-        contRebote++;
-    }
-    else{
-        Desaparecer();
-        delete this;
-    }
+    Vy=-Vy;
+    angulo=atan2(Vy,Vx);
+    ActualizarVelocidad();
+    ActualizarPosicion();
 }
 
 void Cuerpo::ActualizarPosicion()
@@ -66,13 +63,13 @@ void Cuerpo::ActualizarVelocidad()
 
 void Cuerpo::Mover()
 {
-    //Colisiones();
-    if((posY>0 && posY<400 )&&
-            (posX>-20 && posX<680)){
-                ActualizarVelocidad();
-                ActualizarPosicion();
-    }else if(tipo==2 && (posX>-20 && posX<680)){
+    Colisiones();
+    if(Colisiones()==true && tipo==1)
+    {
         rebotar();
+    }
+    else if(posY<400)
+    {
         ActualizarVelocidad();
         ActualizarPosicion();
     }
@@ -109,12 +106,14 @@ void Cuerpo::setDelta(int value)
     delta = value;
 }
 
-double Cuerpo::getCoefRestitucion() const
+bool Cuerpo::Colisiones()
 {
-    return coefRestitucion;
-}
-
-void Cuerpo::Colisiones()
-{
-
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+    for(int i=0, n=colliding_items.size(); i<n; i++){
+        qDebug() << "chocó";
+        if((typeid(*(colliding_items[i]))==typeid (Obstaculo))){
+            return true;
+        }
+    }
+    return false;
 }
