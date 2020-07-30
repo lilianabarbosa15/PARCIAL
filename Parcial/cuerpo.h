@@ -31,7 +31,7 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
 
-    void rebotar();
+    void rebotar(unsigned short int tipo);
     void ActualizarPosicion();
     void ActualizarVelocidad();
 

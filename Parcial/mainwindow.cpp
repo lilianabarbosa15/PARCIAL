@@ -30,8 +30,8 @@ void MainWindow::on_objetoEspecial_clicked()
 {
     qDebug() << "Nuevo cuerpo";
     x_random = rand() % 650 + 10;
-    x_random = rand() % 200 + 10;
-    Pelotas.push_back(new Cuerpo(12, x_random, y_random,0,2));
+    y_random = rand() % 10;
+    Pelotas.push_back(new Cuerpo(14, x_random, y_random,5,(3*M_PI)/2,2));
     Pelotas.back()->setFlag(QGraphicsItem::ItemIsFocusable);
     escena->addItem(Pelotas.back());
 }
@@ -41,7 +41,7 @@ void MainWindow::Actualizar()
     contTime++;
 
     qDebug() << "Nuevo cuerpo";
-    if(contTime%2==0){
+    if(contTime%3==0){
         x_random = rand() % 650 + 10;
         y_random = rand() % 100 + 10;
         Pelotas.push_back(new Cuerpo(10, x_random, y_random,5,0));
@@ -50,7 +50,12 @@ void MainWindow::Actualizar()
     }
 
     x_random = rand() % 600 + 10;
-    y_random = rand() % 300 + 220;
+    y_random = rand() % 300 + 200;
     Obstaculos.push_back(new Obstaculo(40,10,x_random,y_random));
     escena->addItem(Obstaculos.back());
+
+    if(contTime%2==0){
+        escena->removeItem(Obstaculos.at(0));
+        Obstaculos.remove(0);
+    }
 }
